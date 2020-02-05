@@ -10,10 +10,21 @@
 {
     <p>No cheeses yet!</p>
 }
+else
+{
+    <p><a asp-controller="Cheese" asp-action="Remove">Remove Cheese</a></p>
+}
 
 <ul>
-    @foreach(string cheese in ViewBag.cheeses.Keys)
+    @foreach (string cheese in ViewBag.cheeses.Keys)
     {
-        <li>@cheese - @ViewBag.cheeses[cheese]</li>
+        if (ViewBag.cheeses[cheese] != null)
+        {
+            <li>@cheese - @ViewBag.cheeses[cheese]</li>
+        }
+        else
+        {
+            <li>@cheese</li>
+        }
     }
 </ul>
