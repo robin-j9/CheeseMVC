@@ -16,15 +16,15 @@ else
 }
 
 <ul>
-    @foreach (string cheese in ViewBag.cheeses.Keys)
+    @foreach (Cheese cheese in ViewBag.cheeses)
     {
-        if (ViewBag.cheeses[cheese] != null)
+        if (cheese.Description != null)
         {
-            <li>@cheese - @ViewBag.cheeses[cheese]</li>
+            <li>@cheese.Name - @cheese.Description</li>
         }
         else
         {
-            <li>@cheese</li>
+            <li>@cheese.Name</li>
         }
     }
 </ul>

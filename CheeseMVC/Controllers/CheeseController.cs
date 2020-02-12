@@ -4,6 +4,7 @@ using System.Linq;
 using System.Threading.Tasks;
 using Microsoft.AspNetCore.Mvc;
 using System.Text.RegularExpressions;
+using CheeseMVC.Models;
 
 // For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
 
@@ -11,7 +12,8 @@ namespace CheeseMVC.Controllers
 {
     public class CheeseController : Controller
     {
-        static private Dictionary<string, string> Cheeses = new Dictionary<string, string>();
+        // static private Dictionary<string, string> Cheeses = new Dictionary<string, string>();
+        static private List<Cheese> Cheeses = new List<Cheese>();
         static private Boolean invalidInput = false;
 
         // GET: /<controller>/
@@ -36,7 +38,7 @@ namespace CheeseMVC.Controllers
             Regex alpha = new Regex("^[a-zA-Z\\s]+$");
             if(alpha.IsMatch(name))
             {
-                Cheeses.Add(name, description);
+                Cheeses.Add(new Cheese(name, description));
                 return Redirect("/Cheese");
             }
             else
@@ -59,7 +61,8 @@ namespace CheeseMVC.Controllers
         {
             foreach(string cheese in cheeseSelection)
             {
-                Cheeses.Remove(cheese);
+                // Cheeses.Remove(cheese);
+                Cheeses.RemoveAll(Cheese => Cheese.Name == cheese);
             }
             return Redirect("/Cheese");
         }
