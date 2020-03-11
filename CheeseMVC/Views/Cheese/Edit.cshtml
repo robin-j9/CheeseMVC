@@ -1,0 +1,18 @@
+﻿<h1>Edit Cheese @ViewBag.cheeseToEdit.Name (id=@ViewBag.cheeseToEdit.CheeseId)</h1>
+
+<form method="post">
+    <label>
+        Name:
+        <input type="text" name="@ViewBag.cheeseToEdit.Name" required />
+    </label>
+    @if (ViewBag.isInvalidInput != null && ViewBag.isInvalidInput == true)
+    {
+        <span>  Only alphabetic characters and spaces allowed.</span>
+    }<br />
+    <label>
+        Description:
+        <textarea name="@ViewBag.cheeseToEdit.Description"></textarea>
+    </label><br />
+    <input type="hidden" value="@ViewBag.cheeseToEdit.CheeseId" name="id" />
+    <input type="submit" value="Add Cheese" />
+</form>

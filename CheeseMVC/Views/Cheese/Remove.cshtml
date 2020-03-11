@@ -1,13 +1,13 @@
 ﻿@{
 }
 
-<h1>Remove Cheese</h1>
+<h1>@ViewBag.title</h1>
 
 <form method="post">
     @foreach (Cheese cheese in ViewBag.cheeseList)
     {
         <label>
-            <input type="checkbox" name="cheeseSelection" value="@cheese.Name" />
+            <input type="checkbox" name="cheeseIds" value="@cheese.CheeseId" />
             @cheese.Name
         </label><br />
     }

@@ -12,14 +12,12 @@ namespace CheeseMVC.Controllers
 {
     public class CheeseController : Controller
     {
-        // static private Dictionary<string, string> Cheeses = new Dictionary<string, string>();
-        static private List<Cheese> Cheeses = new List<Cheese>();
-        static private Boolean invalidInput = false;
+        static private bool invalidInput = false;
 
         // GET: /<controller>/
         public IActionResult Index()
         {
-            ViewBag.cheeses = Cheeses;
+            ViewBag.cheeses = CheeseData.GetAll();
             invalidInput = false;
 
             return View();
@@ -33,12 +31,12 @@ namespace CheeseMVC.Controllers
 
         [HttpPost]
         [Route("/Cheese/Add")]
-        public IActionResult NewCheese(string name, string description)
+        public IActionResult NewCheese(Cheese newCheese)
         {
             Regex alpha = new Regex("^[a-zA-Z\\s]+$");
-            if(alpha.IsMatch(name))
+            if(alpha.IsMatch(newCheese.Name))
             {
-                Cheeses.Add(new Cheese(name, description));
+                CheeseData.Add(newCheese);
                 return Redirect("/Cheese");
             }
             else
@@ -50,20 +48,36 @@ namespace CheeseMVC.Controllers
 
         public IActionResult Remove()
         {
-            ViewBag.cheeseList = Cheeses;
+            ViewBag.title = "Remove Cheese";
+            ViewBag.cheeseList = CheeseData.GetAll();
 
             return View();
         }
         
         [HttpPost]
         [Route("/Cheese/Remove")]
-        public IActionResult CheeseRemoval(string[] cheeseSelection)
+        public IActionResult CheeseRemoval(int[] cheeseIds)
         {
-            foreach(string cheese in cheeseSelection)
+            foreach(int id in cheeseIds)
             {
-                // Cheeses.Remove(cheese);
-                Cheeses.RemoveAll(Cheese => Cheese.Name == cheese);
+                CheeseData.Remove(id);
             }
+            return Redirect("/Cheese");
+        }
+
+        public IActionResult Edit(int cheeseId)
+        {
+            ViewBag.cheeseToEdit = CheeseData.GetById(cheeseId);
+            return View();
+        }
+
+        [HttpPost]
+        public IActionResult Edit(int cheeseId, string name, string description)
+        {
+            Cheese cheeseToEdit = CheeseData.GetById(cheeseId);
+            cheeseToEdit.Name = name;
+            cheeseToEdit.Description = description;
+
             return Redirect("/Cheese");
         }
     }
