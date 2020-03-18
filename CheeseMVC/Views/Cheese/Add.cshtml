@@ -1,18 +1,34 @@
-﻿@{
-}
+﻿@model CheeseMVC.ViewModels.AddCheeseViewModel
 
 <h1>Add Cheese</h1>
 
-<form method="post">
-    <label>Name: 
-        <input type="text" name="name" required/>
-    </label>
-    @if (ViewBag.isInvalidInput != null && ViewBag.isInvalidInput == true)
-    {
-        <span>  Only alphabetic characters and spaces allowed.</span>
-    }<br />
-    <label>Description:
-        <textarea name="description"></textarea>
-    </label><br />
+<form asp-controller="Cheese" asp-action="Add" method="post">
+    @*<div asp-validation-summary="All"></div>*@
+    <div class="form-group">
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" />
+        @*@if (ViewBag.isInvalidInput != null && ViewBag.isInvalidInput == true)
+        {
+            <span>  Only alphabetic characters and spaces allowed.</span>
+        }*@
+        <span asp-validation-for="Name"></span>
+    </div>
+    <div class="form-group">
+        <label asp-for="Description"></label>
+        <input class="form-control" asp-for="Description" />
+        <span asp-validation-for="Description"></span>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Type"></label>
+        <select asp-for="Type" asp-items="Model.CheeseTypes"></select>
+    </div>
+
+    <div class="form-group">
+        <label asp-for="Rating"></label>
+        <input asp-for="Rating" />
+        <span asp-validation-for="Rating"></span>
+    </div>
+    
     <input type ="submit" value="Add Cheese" />
 </form>

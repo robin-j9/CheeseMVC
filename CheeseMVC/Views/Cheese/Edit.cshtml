@@ -1,18 +1,35 @@
-﻿<h1>Edit Cheese @ViewBag.cheeseToEdit.Name (id=@ViewBag.cheeseToEdit.CheeseId)</h1>
+﻿@model CheeseMVC.ViewModels.EditCheeseViewModel
+
+<h1>Edit Cheese @Model.Name (id=@Model.CheeseId)</h1>
 
 <form method="post">
-    <label>
-        Name:
-        <input type="text" name="@ViewBag.cheeseToEdit.Name" required />
-    </label>
-    @if (ViewBag.isInvalidInput != null && ViewBag.isInvalidInput == true)
-    {
-        <span>  Only alphabetic characters and spaces allowed.</span>
-    }<br />
-    <label>
-        Description:
-        <textarea name="@ViewBag.cheeseToEdit.Description"></textarea>
-    </label><br />
-    <input type="hidden" value="@ViewBag.cheeseToEdit.CheeseId" name="id" />
-    <input type="submit" value="Add Cheese" />
+    <div>
+        <label asp-for="Name"></label>
+        <input class="form-control" asp-for="Name" value="@Model.Name" />
+        <span asp-validation-for="Name"></span>
+    </div>
+
+    @*@if (ViewBag.isInvalidInput != null && ViewBag.isInvalidInput == true)
+        {
+            <span>  Only alphabetic characters and spaces allowed.</span>
+        }<br />*@
+
+    <div>
+        <label asp-for="Description"></label>
+        <input class="form-control" asp-for="Description" value="@Model.Description" />
+        <span asp-validation-for="Description"></span>
+    </div>
+    <div>
+        <label asp-for="Type"></label>
+        <select class="form-control" asp-for="Type" asp-items="Model.CheeseTypes" value="@Model.Type"></select>
+    </div>
+    <div>
+        <label asp-for="Rating"></label>
+        <input class="form-control" asp-for="Rating" value="@Model.Rating"/>
+        <span asp-validation-for="Rating"></span>
+    </div>
+
+    <input type="hidden" asp-for="CheeseId" />
+
+    <input class="form-control" type="submit" value="Edit Cheese" />
 </form>
